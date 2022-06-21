@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}
+帳戶設定
+{% endblock %}
+
+{% block head %}
+    <style>
+        body {
+          background-image: url("{{ url_for('static', filename='img/darkwood.jpeg') }}");
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: cover;
+        }
+        .block{
+          border-style: groove;
+		  border-radius: 15px;
+		  margin: 30px 50px 50px 50px;
+          background-image: url("{{ url_for('static', filename='img/wood1.jpg') }}"); 
+          padding: 60px;
+          font-weight: bold;
+        }
+		footer.c{
+          padding: 15px 5px 5px 5px;
+          color: white;
+          background-color: gray;
+        }
+		footer {
+          background-color: #f1f1f1;
+          padding: 50px;
+          text-align: center;
+        }
+		.btnstyle{
+		  background-color: black;
+		  color : white;
+		  font-size: 20px;
+		}
+		.btnblock{
+		  font-size: 20px;
+		}
+		.hr{
+          border-width: 3px; 
+          border-color: white; 
+		  width: 80%;
+        }
+    </style>
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<center>
+    <form class="block form form-horizontal col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3" action="" method="post" novalidate>
+        <h1 style="font-family:Brush Script MT; font-size:70px; color:white">Settings</h1>
+		<hr class="hr"><br>
+        {{ form.hidden_tag() }}
+        <p style="font-family:'Courier New'">
+            {{ form.password_new.label(class="btnstyle btn btn-lg btn", style="padding: 8px 54px 8px 54px")  }}
+            {{ form.password_new(size=32, placeholder="Enter to change your password", class="btn btnblock btn-md") }}<br>
+            {% for error in form.password_new.errors %}
+                <span sclass="span">{{ error }}</span>
+            {% endfor %}
+        </p>
+        
+        <p style="font-family:'Courier New'">
+            {{ form.password_confirm.label(class="btnstyle btn btn-lg")  }}
+            {{ form.password_confirm(size=32, placeholder="Enter your new password", class="btn btnblock btn-md") }}<br>
+            {% for error in form.password_confirm.errors %}
+                <span class="span">{{ error }}</span>
+            {% endfor %}
+        </p>
+        
+        {% if current_user.tfa_enabled %}
+        <p style="color: white;">
+            {{ form.otp_disable }} {{ form.otp_disable.label }}
+        </p>
+        {% endif %}
+        
+        <p>
+            {% if not current_user.tfa_enabled %}
+                <img style="border-radius:45px; border-style:solid; border-width:medium; margin-top:10px", src='data:image/png;base64, {{ form.getOauth(appname=website_name, issuer=website_name, secret=current_user.otp_secret[1:], scale=5) }}' /><br>
+            {% endif %}
+            <p style="font-family:'Courier New'; border-radius:45px; margin-top:50px">
+                {{ form.otp_code.label(class="btnstyle btn btn-lg btn", style="padding: 8px 59px 8px 59px")  }}
+                {% if not current_user.tfa_enabled %}
+                    {{ form.otp_code(size=32, placeholder="Enter to enable authentication", class="btn btn-md btnblock") }}
+                {% else %}
+                    {{ form.otp_code(size=32, placeholder="Required", class="btn btn-md btnblock")  }}
+                {% endif %}<br>
+                {% for error in form.otp_code.errors %}
+                    <span class="span">{{ error }}</span>
+                {% endfor %}
+            </p>
+        </p>
+        
+        <p style="font-family:'Courier New'">
+            {{ form.password_old.label(class="btnstyle btn btn-lg btn") }}
+            {{ form.password_old(size=32, placeholder="Required", class="btn btnblock btn-md") }}<br><br>
+            {% for error in form.password_old.errors %}
+                <span class="span">{{ error }}</span>
+            {% endfor %}
+        </p>
+        
+        <p style="font-family:'Courier New'">
+            {{ form.submit(class="btn btn-lg btn-success", style="font-size:15px; padding: 15px 60px 15px 60px") }}
+        </p>
+        
+        <p style="font-family:'Courier New'">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <span style="color: green; font-size:20px">{{ message }}</span>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        </p>
+    </form><br><br><br>
+	
+    {% block footer %}
+        {{ super() }}
+    {% endblock %}
+</center>
+{% endblock %}

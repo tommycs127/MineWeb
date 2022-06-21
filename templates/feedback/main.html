@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{%block title %}
+意見回報
+{% endblock %}
+
+{% block head %}
+    <style>
+        body {
+          background-image: url("{{ url_for('static', filename='img/darkwood.jpeg') }}");
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: cover;
+        }
+        .header {
+          padding: 100px 40px 100px 40px;
+          text-align: center;
+          background-image: url("{{ url_for('static', filename='img/thumb-1920-6094081.png') }}");
+          background-repeat: no-repeat;
+          background-size: cover;
+          color: black;
+        }
+        .block_black{
+          border-style: groove;
+          padding: 20px 20px;
+          margin: 20px 0px;
+          font-family: 'Courier New'; 
+          color: white; 
+          font-size: 18px;
+          background-color: gray;
+        }
+        .block{
+          border-style: groove;
+          border-radius: 15px;
+          background-image: url("{{ url_for('static', filename='img/wood1.jpg') }}");
+          padding: 5px 15px 5px 15px;
+          width: auto;
+          height: auto;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        textarea{
+          width:100%;
+        }
+        .textwrapper
+        {
+          border:1px solid #999999;
+          margin:5px 0;
+          padding:3px;
+          border-radius: 10px;
+          margin: 0px 30px 0px 30px;
+        }
+        footer {
+          background-color: #f1f1f1;
+          padding: 50px;
+          text-align: center;
+        }
+        footer.c{
+          padding: 15px 5px 5px 5px;
+          color: white;
+          background-color: gray;
+          margin-top: 60px;
+        }
+        h1.h1{
+          font-size: 60px;
+          color: black;
+        }
+        p.p1{
+          font-size: 30px;
+          color: black;
+        }
+    </style>
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+    <center>
+        <div class="" action="" method="post" novalidate>
+            <div>
+                <div class="header">
+                  <h1 class="h1">Any feedback to {{website_name}} ?</h1>
+                </div>
+                <div>
+                    <div style="margin-top:60px">
+                        <div class="block col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-5 col-md-offset-1 col-lg-5 col-lg-offset-1" style="margin-bottom:30px">
+                            <h1 style="font-family:Brush Script MT; font-size:70px; color: white">Key</h1>
+                            <hr style="border-width:4px; border-color:white; margin-left:100px; margin-right:100px">
+                            <form action="" method="post" novalidate>
+                                {{ searchForm.hidden_tag() }}
+                                <center><div class="block_black btn btn-lg">
+                                    <p>Already submit a feedback ??</p>
+                                    <p>Plese enter your feedback </p>
+                                    <p>key, to check the reply.</p>
+                                </div><br><br></center>
+                                <center><p style="font-family:'Courier New'; color:white; font-size:15px">
+                                    {{ searchForm.key.label }}<br>
+                                    {{ searchForm.key(class="btn", style="border-color:black")}}<br>
+                                    {% for error in submitForm.type_.errors %}
+                                    <span style="color: red">{{ error }}</span>
+                                    {% endfor %}
+                                </p>
+                                <p style="font-family:'Courier New'">
+                                    {{ submitForm.submit(class="btn btn-sm btn-success", style="font-size:20px") }}
+                                </p></center>
+                            </form>       
+                        </div>
+                        <div class="block col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-3 col-md-offset-2 col-lg-3 col-lg-offset-1">
+                            <p>
+								<h1 style="font-family:Brush Script MT; font-size:70px; color: white">Server Status</h1>
+								<hr style="border-width:4px; border-color:white; margin-left:100px; margin-right:100px">
+                            </p>
+                            <iframe src="{{ url_for('server.status') }}" style="border: 0; width: 100%" onload="this.style.height = (this.contentWindow.document.documentElement.scrollHeight + 45) + 'px'"></iframe>
+                        </div>
+                    </div>             
+                    <div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <h1 style="font-family:Brush Script MT; font-size:70px; color:white">Feedback</h1>
+                            <hr style="border-width:4px; border-color:white; margin-left:100px; margin-right:100px"><br>
+                        </div>
+                        <div>
+                        </div>
+                        <div class="block col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+                            <form action="{{ url_for('feedback.feedback') }}" method="post" novalidate>
+                                {{ submitForm.hidden_tag() }}
+                                <p style="font-family:'Courier New'">
+                                    {{ submitForm.type_(class="btn btn-lg block_black btn-block", style="font-family:'Courier New'; font-size:20px; list-style-type:none; display:grid; justify-content: space-between; text-align: left")}}<br>
+                                    {% for error in submitForm.type_.errors %}
+                                    <span style="color: red">{{ error }}</span>
+                                    {% endfor %}
+                                </p>
+                                <p style="font-family:'Courier New'">
+                                    <b><h1 class="glyphicon glyphicon-pencil" style="color:white; font-family:'Courier New'">Content</h1><h1 class="glyphicon glyphicon-pencil" style="color:white; font-family:'Courier New'"></h1><br></b>
+                                    <div style="display: block" id="rulesformitem" class="formitem">
+                                        <div class="textwrapper">{{ submitForm.content(style="border-width:4px; resize: none", cols="100",rows="10")}}</div><br>
+                                    </div>
+                                    {% for error in submitForm.content.errors %}
+                                    <span style="color: red">{{ error }}</span>
+                                    {% endfor %}
+                                </p>
+                                <p>
+                                    <center>{{ submitForm.submit(class="btn btn-sm btn-success", style="font-size:20px; font-family:'Courier New") }}</center>
+                                </p>
+                            </form>
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </center>
+    
+    {% block footer %}
+        {{ super() }}
+    {% endblock %}
+{% endblock %}
+    	

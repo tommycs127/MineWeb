@@ -1,0 +1,76 @@
+{% extends "bootstrap/base.html" %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block title %}
+    {{ website_name }}
+{% endblock %}
+
+{% block navbar %}
+<div class="navbar-inverse navbar navbar-default navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/"><span>{{ website_name }}</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li {% if request.path.startswith('/wiki') %}class="active"{% endif %}>
+                    <a href="/wiki">Wiki</a>
+                </li>
+                <li {% if request.path.startswith('/forum') %}class="active"{% endif %}>
+                    <a href="/forum">Forum</a>
+                </li>
+                <li {% if request.path.startswith('/feedback') %}class="active"{% endif %}>
+                    <a href="/feedback">Feedback</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <form class="form-inline" style="margin-top:10px; margin-left:10px" action="/search">
+                        <input class="form-control mr-sm-2" id="q" name="q" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><span class="glyphicon glyphicon-search"></span>Search</button>
+                    </form>
+                </li>
+                {% if not current_user.is_authenticated %}
+                <li {% if request.path.startswith('/login') %}class="active"{% endif %}>
+                    <a href="/login"><span class="glyphicon glyphicon-log-in" ></span> Login</a>
+                </li>
+                <li {% if request.path.startswith('/register') %}class="active"{% endif %}>
+                    <a href="/register"><span class="glyphicon glyphicon-user"></span> Register</a>
+                </li>
+                {% else %}
+                <li>
+                    <a class="disabled"><span class="glyphicon glyphicon-user"></span> Hello, {{ current_user.name }}!</a>
+                </li>
+                <li {% if request.path.startswith('/settings') %}{% endif %}>
+                    <a href="/settings"><span class="glyphicon glyphicon-cog" ></span> Settings</a>
+                </li>
+                <li {% if request.path.startswith('/logout') %}class="active"{% endif %}>
+                    <a href="/logout"><span class="glyphicon glyphicon-log-out" ></span> Logout</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+    {% block page_content %}
+        <h1>This is homepage</h1>
+    {% endblock %}
+{% endblock %}
+
+{% block footer %}
+	<footer class="c col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <p>2019-2020 @ Team B15 (PCCU) | Last Updated: 2020-10-16</p>
+    </footer>
+{% endblock %}

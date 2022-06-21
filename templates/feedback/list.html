@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{%block title %}
+意見回報列表
+{% endblock %}
+
+{% block head %}
+    <style>
+        body {
+          background-image: url("{{ url_for('static', filename='img/darkwood.jpeg') }}");
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: cover;
+        }
+        .header {
+          padding: 100px 40px 100px 40px;
+          text-align: center;
+          background-image: url("{{ url_for('static', filename='img/thumb-1920-6094081.png') }}");
+          background-repeat: no-repeat;
+          background-size: cover;
+        }
+        .block{
+          border-style: groove;
+          border-radius: 15px;
+          background-image: url("{{ url_for('static', filename='img/wood1.jpg') }}");
+          width: auto;
+          height: auto;
+          margin: 60px 30px 60px 30px;
+        }
+        table {
+          border-collapse: collapse;
+          font-family: Times New Roman, Times, serif;
+          font-size: 18px;
+          margin: 0px 0px 30px 0px;
+        }
+        th, td {
+          border-bottom: 4px solid gray;
+          text-align: left;
+          font-style: bold;
+        }
+        tr:nth-child(even) {
+          background: white;
+        }
+        tr:nth-child(odd) {
+          background: lightgray;
+        }
+        th{
+        color: #6666ff;
+        }
+        footer {
+          background-color: gray;
+          padding: 50px;
+          text-align: center;
+          color: white;
+          margin-top: 60px;
+        }
+		footer.c{
+          padding: 15px 5px 5px 5px;
+          color: white;
+          background-color: gray;
+          margin-top: 60px;
+        }
+        tr{
+          font-size: 20px;
+          font-weight: bold;
+        }
+        h1.h1{
+          font-size: 40px;
+          color: black;
+        }
+        p.p1{
+          font-size: 20px;
+          color: black;
+        }
+    </sty
+    </style>
+    {{ super() }}
+    <script src="/js/feedback.js"></script>
+{% endblock %}
+
+{% block content %}
+    <form class="" action="feedback" method="post" onsubmit="return onSubmit(event); location.reload()">
+        <div class="header">
+          <h1 class="h1">User's feedbacks are the start of our innovation.</h1>
+        </div>
+        <center>
+            <h1 style="font-family:Brush Script MT; font-size:70px; color:white">Feedback List</h1>
+            <hr style="border-width:4px; border-color:white; margin-left:100px; margin-right:100px">
+            <div class="block col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1">    
+                <table class="block col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 col-lg-12 col-lg-offset-0">
+                    <tr>
+                        <td>金鑰</td>
+                        <td>時間</td>
+                        <td>種類</td>
+                        <td>內容</td>
+                        <td>狀況</td>
+                    </tr>
+                    {% for feedback in feedbacks %}
+                        <tr>
+                            <td>
+                                <a href="{{ url_for('feedback.feedback_reply', key=feedback.key) }}">
+                                    {{ feedback.key }}
+                                </a>
+                            </td>
+                            <td>{{ feedback.timestamp }}</td>
+                            <td>{{ feedback.type_ }}</td>
+                            <td>{{ feedback.content }}</td>
+                            {% if feedback.reply == '' %}
+                                <td style="color: red">Not replied</td>
+                            {% else %}
+                                <td style="color: #006400">Replied</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </center>
+    </form>
+    {% block footer %}
+        {{ super() }}
+    {% endblock %}   
+{% endblock %}
+
+    	

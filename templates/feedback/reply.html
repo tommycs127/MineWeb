@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{%block title %}
+管理員回應查詢
+{% endblock %}
+
+{% block head %}
+    <style>
+        body {
+          background-image: url("{{ url_for('static', filename='img/darkwood.jpeg') }}");
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: cover;
+        }
+        .block{
+          border-style: groove;
+          border-radius: 15px;
+          background-image: url("{{ url_for('static', filename='img/wood1.jpg') }}");
+          padding: 5px 15px 5px 15px;
+          width: auto;
+          height: auto;
+          margin-left: auto;
+          margin-right: auto;
+          margin-bottom: 40px;
+        }
+        .header {
+          padding: 70px 40px 70px 40px;
+          text-align: center;
+          background-image: url("{{ url_for('static', filename='img/thumb-1920-6094082.png') }}");
+          background-repeat: no-repeat;
+          background-size: cover;
+          margin-bottom: 40px;
+        }
+        table {
+          border-collapse: collapse;
+          font-family: Times New Roman, Times, serif;
+          font-size: 18px;
+          margin: 30px 10px 30px 10px;
+          color: black;
+        }
+        th, td {
+          border-bottom: 4px solid gray;
+          text-align: left;
+          font-style: bold;
+        }
+        tr:nth-child(even) {
+          background: white;
+        }
+        tr:nth-child(odd) {
+          background: lightgray;
+        }
+        th{
+        color: #6666ff;
+        }
+        textarea{
+          width:100%;
+        }
+        .textwrapper
+        {
+          border:1px solid #999999;
+          margin:5px 0;
+          padding:3px;
+          border-radius: 10px;
+          margin-left: 30px;
+          margin-right: 30px;
+        }
+        .block_black{
+          border-style: groove;
+          padding-top: 20px;
+          padding-bottom: 20px;
+          margin-top: 20px;
+          margin-bottom: 0px;
+          font-family: 'Courier New'; 
+          color: white; 
+          font-size: 18px;
+          background-color: gray;
+        }
+        p.p{
+          color: black;
+          margin-top: 30px;
+        }
+        div.div{
+          
+        }
+        footer {
+          background-color: gray;
+          padding: 50px;
+          text-align: center;
+          color: white;
+          margin-top: 60px;
+        }
+        h1.h1{
+          font-size: 40px;
+          color: black;
+        }
+        p.p1{
+          font-size: 20px;
+          color: black;
+        }
+    </style>
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+    <center>
+        <div class="header">
+          <h1 class="h1">User feedback is the start of our innovation.</h1>
+        </div>
+        <div class="block col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
+            <h1 style="font-weight:bold; font-size:25px; color:white">本篇回饋的key為&nbsp "{{ feedback.key }}" &nbsp請記下key以方便日後追蹤</h1>
+            <table class="col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 col-lg-12 col-lg-offset-0" border="1">
+                <tr>
+                    <th>時間</td>
+                    <th>種類</td>
+                </tr>
+                <tr>
+                    <td>{{ feedback.timestamp }}</td>
+                    <td>{{ feedback.type_ }}</td>
+                </tr>
+                <tr>
+                    <th colspan="2"> 
+                        <div style="display: block" id="rulesformitem" class="formitem">
+                            <label for="pre" style="font-size: 20px">內容:</label>
+                            <div class="textwrapper" style="border-radius:10px; border-width: small; border-style:solid; border-color: black; text-align: left"><p id="pre" style="resize:none">{{ feedback.content }}</p></div><br>
+                        </div>
+                    </th>
+                </tr>
+            </table>
+        </div>
+        <div class="block col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
+            <h1 style="font-family:Brush Script MT; font-size:60px; color:white">Reply to user:</h1>
+            <hr style="border-width:4px; border-color:white; margin-left:100px; margin-right:100px">
+            <table border="1">
+                <tr>
+                    <td style="padding-top: 30px">
+                        {% if replyForm == None %}
+                            <p>{{ feedback.reply }}</p>
+                        {% else %}
+                            <form action="" method="post" novalidate>
+                                <p>
+                                    <div style="display: block" id="rulesformitem" class="formitem">
+                                        <div class="textwrapper">{{ replyForm.content(cols="100", rols="10", id="write", style="resize:none; border-radius:8px; border-width: small; border-style:solid; border-color: black")}}</div>
+                                    </div>
+                                    {% for error in replyForm.content.errors %}
+                                    <span style="color: red">{{ error }}</span>
+                                    {% endfor %}
+                                </p>
+                                <center><p>
+                                    {{ replyForm.submit(class="btn btn-lg btn-success", style="font-size:20px") }}
+                                </p></center>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </center>
+    
+    {% block footer %}
+        {{ super() }}
+    {% endblock %}
+
+{% endblock %}
+    	

@@ -1,0 +1,15 @@
+img {
+    clear: right;
+    float: right;
+    max-width: 35%;
+    max-height: 35%;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid;
+    padding: 8px;
+}

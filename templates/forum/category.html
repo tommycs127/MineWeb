@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}
+論壇 - {{ category.name }}
+{% endblock %}
+
+{% block content %}
+    <a href="{{ url_for('forum.homepage') }}">Forum</a> > {{ category.name }}
+    <hr>
+
+    <h1>
+        {{ category.name }}
+    </h1>
+    <h2>{{ category.intro }}</h2>
+
+    {% if posts or hidden_posts %}
+        <p>
+            <a href="{{ url_for('forum.post_add', cate_id=category.id) }}">Add post</a>
+        </p>
+        
+        {% if posts %}
+            <table border="1">
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Timestamp</th>
+                    <th>Comments</th>
+                </tr>
+                {% for p in posts %}
+                    <tr>
+                        <td>
+                            <a href="{{ url_for('forum.post', post_id=p.id) }}">{{ p.title }}</a>
+                        </td>
+                        <td>
+                            {{ p.User.name }}
+                        </td>
+                        <td>
+                            {{ p.timestamp }}
+                        </td>
+                        <td>
+                            {{ p.comments|length }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+        
+        {% if hidden_posts %}
+            <table border="1">
+                <tr><th colspan="4">Hidden posts</th></tr>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Timestamp</th>
+                    <th>Comments</th>
+                </tr>
+                {% for p in hidden_posts %}
+                    <tr>
+                        <td>
+                            <a href="{{ url_for('forum.post', post_id=p.id) }}">{{ p.title }}</a>
+                        </td>
+                        <td>
+                            {{ p.User.name }}
+                        </td>
+                        <td>
+                            {{ p.timestamp }}
+                        </td>
+                        <td>
+                            {{ p.comments|length }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    {% else %}
+    <p>
+        No posts at the moment. You can <a href="{{ url_for('forum.post_add', cate_id=category.id) }}">add the first post</a> here!
+    </p>
+    {% endif %}
+    
+    {% block footer %}
+        {{ super() }}
+    {% endblock %}
+{% endblock %}

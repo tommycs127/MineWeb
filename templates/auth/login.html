@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}
+登入
+{% endblock %}
+
+{% block head %}
+    <style>
+        body {
+          background-image: url("{{ url_for('static', filename='img/darkwood.jpeg') }}");
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: cover;
+        }
+        .block{
+          border-style: groove;
+		  border-radius: 15px;
+		  margin: 30px 50px 50px 50px;
+          background-image: url("{{ url_for('static', filename='img/wood1.jpg') }}"); 
+          padding: 60px;
+          font-weight: bold;
+        }
+		footer.c{
+          padding: 15px 5px 5px 5px;
+          color: white;
+          background-color: gray;
+        }
+		footer {
+          background-color: #f1f1f1;
+          padding: 50px;
+          text-align: center;
+        }
+		.btnstyle{
+		  background-color: black;
+		  color : white;
+		  font-size: 20px;
+		}
+		.btnblock{
+		  font-size: 20px;
+		}
+		.hr{
+          border-width: 3px; 
+          border-color: white; 
+		  width: 80%;
+        }
+		span.span{
+		 font-size: 20px;
+		 color: orange;
+		}
+    </style>
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<center>
+    <form class="block form form-horizontal col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4" action="" method="post" novalidate>
+        <b>
+            <h1 style="font-family:Brush Script MT; font-size:80px; color:white">Login</h1>
+			<hr class="hr">
+            {{ form.csrf_token() }}
+            <p style="font-family:'Courier New'">
+                <br>
+                {{ form.name.label(class="btnstyle btn btn-lg btn") }}
+                {{ form.name(size=32, placeholder="Required", class="btn btnblock btn-md") }}<br>
+                {% for error in form.name.errors %}
+                <span class="span">{{ error }}</span>
+                {% endfor %}
+            </p>
+            <p style="font-family:'Courier New'">
+                {{ form.password.label(class="btn btn-lg btnstyle") }}
+                {{ form.password(size=32, placeholder="Required", class="btn btnblock btn-md") }}<br>
+                {% for error in form.password.errors %}
+                <span class="span">{{ error }}</span>
+                {% endfor %}
+            </p>
+            <p style="font-family:'Courier New'">
+                {{ form.otp_code.label(class="btn btn-lg btnstyle") }}
+                {{ form.otp_code(size=32, placeholder="If available", class="btnblock btn btn-md") }}<br><br>
+                {% for error in form.otp_code.errors %}
+                <span class="span">{{ error }}</span>
+                {% endfor %}
+            </p>
+            <p style="font-family:'Courier New'">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <span class="span">{{ message }}</span>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </p>
+            <p style="font-family:'Courier New'">
+                <a href="{{ url_for('auth.register') }}" class="btn btn-sm btn-info" style="padding-left:98px; padding-right:98px">Register</a>
+            </p>
+            <p style="font-family:'Courier New'">
+                <a href="{{ url_for('auth.recovery') }}" class="btn btn-sm btn-info" style="padding-left:73px; padding-right:73px">Forgot Password</a>
+            </p>
+            <p style="font-family:'Courier New'">
+                {{ form.remember_me(class="btn btn-basic btn-sm") }} {{ form.remember_me.label(class="btn btn-basic btn-sm", style="font-size:15px; color:white") }}
+            </p>
+            <p style="font-family:'Courier New'">
+                {{ form.submit(class="btn btn-lg btn-success", style="font-size:15px; padding: 15px 60px 15px 60px") }}
+            </p>
+        </b>
+    </form><br><br><br>
+	
+    {% block footer %}
+        {{ super() }}
+    {% endblock %}
+</center>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    {{ super() }}
+    <style>
+        body {
+          background-image: url("{{ url_for('static', filename='img/bg.jpg') }}");
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: cover;
+        }
+        h1{
+          color: white;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<center>
+    <h1 class="container-fluid" style="margin-top: 70px">
+    {{ code }} -
+    {% if code == 400 %} Bad Request
+    {% elif code == 401 %} Unauthorized
+    {% elif code == 402 %} Payment Required
+    {% elif code == 403 %} Forbidden
+    {% elif code == 404 %} Not Found
+    {% elif code == 405 %} Method Not Allowed
+    {% elif code == 406 %} Not Acceptable
+    {% elif code == 407 %} Proxy Authentication Required
+    {% elif code == 408 %} Request Timeout
+    {% elif code == 409 %} Conflict
+    {% elif code == 410 %} Gone
+    {% elif code == 411 %} Length Required
+    {% elif code == 412 %} Precondition Failed
+    {% elif code == 413 %} Request Entity Too Large
+    {% elif code == 414 %} Request-URI Too Long
+    {% elif code == 415 %} Unsupported Media Type
+    {% elif code == 416 %} Requested Range Not Satisfiable
+    {% elif code == 417 %} Expectation Failed
+    {% elif code == 418 %} I'm a teapot
+    {% elif code == 421 %} Misdirected Request
+    {% elif code == 422 %} Unprocessable Entity
+    {% elif code == 423 %} Locked
+    {% elif code == 424 %} Failed Dependency
+    {% elif code == 425 %} Too Early
+    {% elif code == 426 %} Upgrade Required
+    {% elif code == 428 %} Precondition Required
+    {% elif code == 429 %} Too Many Requests
+    {% elif code == 431 %} Request Header Fields Too Large
+    {% elif code == 451 %} Unavailable For Legal Reasons
+    {% elif code == 500 %} Internal Server Error
+    {% elif code == 501 %} Not Implemented
+    {% elif code == 502 %} Bad Gateway
+    {% elif code == 503 %} Service Unavailable
+    {% elif code == 504 %} Gateway Timeout
+    {% elif code == 505 %} HTTP Version Not Supported
+    {% elif code == 506 %} Variant Also Negotiates
+    {% elif code == 507 %} Insufficient Storage
+    {% elif code == 508 %} Loop Detected
+    {% elif code == 510 %} Not Extended
+    {% elif code == 511 %} Network Authentication Required
+    {% endif %}
+    </h1>
+</center>
+{% endblock %}

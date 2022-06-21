@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}
+帳戶救援
+{% endblock %}
+
+{% block head %}
+    <style>
+        body {
+          background-image: url("{{ url_for('static', filename='img/darkwood.jpeg') }}");
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: cover;
+        }
+        .block{
+          border-style: groove;
+		  border-radius: 15px;
+		  margin: 30px 50px 50px 50px;
+          background-image: url("{{ url_for('static', filename='img/wood1.jpg') }}"); 
+          padding: 60px;
+          font-weight: bold;
+        }
+        .block1{
+          border-style: groove;
+          border-radius: 15px;
+          padding-top: 20px;
+          margin: 20px 60px 20px 60px;
+          background-image: url("{{ url_for('static', filename='img/wood3.jpg') }}"); 
+        }
+		footer.c{
+          padding: 15px 5px 5px 5px;
+          color: white;
+          background-color: gray;
+        }
+		footer {
+          background-color: #f1f1f1;
+          padding: 50px;
+          text-align: center;
+        }
+		.btnstyle{
+		  background-color: black;
+		  color : white;
+		  font-size: 20px;
+		}
+		.btnblock{
+		  font-size: 20px;
+		}
+		.hr{
+          border-width: 3px; 
+          border-color: white; 
+		  width: 80%;
+        }
+		span.span{
+		 font-size: 20px;
+		 color: orange;
+		}
+    </style>
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<center>
+    <form class="block form form-horizontal col-xs-10 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3" action="" method="post" novalidate">
+        <b>
+			<h1 style="font-family:Brush Script MT; font-size:80px; color:white">Recovery</h1>
+			<hr class="hr"><br>
+            {{ form.hidden_tag() }}
+            <div class="block1 "style="color:red; font-size:14px">
+                <p>This feature is for <i>users with OTP authentication</i>.</p>
+                <p>If you forgot your password without enabling it,</p>
+                <p>please contact the server owner for recovery.</p>
+            </div><br><br>
+            <p style="font-family:'Courier New'">
+                {{ form.name.label(class="btnstyle btn btn-lg btn", style="padding: 8px 75px 8px 75px") }}
+                {{ form.name(size=32, placeholder="Required", class="btn btnblock btn-md") }}<br>
+                {% for error in form.name.errors %}
+                <span class="span">{{ error }}</span>
+                {% endfor %}
+            </p>
+            <p style="font-family:'Courier New'">
+                {{ form.otp_code.label(class="btnstyle btn btn-lg btn", style="padding: 8px 75px 8px 75px") }}
+                {{ form.otp_code(size=32, placeholder="Required", class="btn btnblock btn-md") }}<br>
+                {% for error in form.otp_code.errors %}
+                <span class="span">{{ error }}</span>
+                {% endfor %}
+            </p>
+            <p style="font-family:'Courier New'">
+                {{ form.password.label(class="btnstyle btn btn-lg btn", style="padding: 8px 54px 8px 54px") }}
+                {{ form.password(size=32, placeholder="Required", class="btn btnblock btn-md") }}<br>
+                {% for error in form.password.errors %}
+                <span class="span">{{ error }}</span>
+                {% endfor %}
+            </p>
+            <p style="font-family:'Courier New'">
+                {{ form.password_confirm.label(class="btnstyle btn btn-lg btn") }}
+                {{ form.password_confirm(size=32, placeholder="Required", class="btn btnblock btn-md") }}<br><br>
+                {% for error in form.password_confirm.errors %}
+                <span class="span">{{ error }}</span>
+                {% endfor %}
+            </p>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <span class="span">{{ message }}</span>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <p style="font-family:'Courier New'">
+                {{ form.submit(class="btn btn-lg btn-success", style="font-size:15px; padding: 15px 60px 15px 60px") }}
+            </p>
+        </b>
+    </form><br><br><br>
+	
+    {% block footer %}
+        {{ super() }}
+    {% endblock %}
+</center>
+{% endblock %}
