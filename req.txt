@@ -1,0 +1,16 @@
+flask
+flask-babel
+flask-bootstrap
+flask-login
+flask-migrate
+flask-moment
+flask-sqlalchemy
+flask-whooshalchemy3
+flask-wtf
+gevent
+mcstatus
+pyotp
+pypng
+pyqrcode
+python-creole
+requests
